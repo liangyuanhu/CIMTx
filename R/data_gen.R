@@ -18,10 +18,10 @@
 #' @examples
 #' library(CIMTx)
 #' set.seed(3242019)
-#' idata = data_gen(n = 1200, ratio =1,scenario = 1)
+#' idata = data_gen(n = 120, ratio =1,scenario = 1)
 data_gen <- function(n, scenario, ratio, overlap, all_confounder){
   if (scenario == 1) {
-    data_gen_result <- data_gen_p1(n, ratio,all_confounder=F)
+    data_gen_result <- data_gen_p1(n, ratio,all_confounder=FALSE)
   }
   if (scenario == 2) {
     data_gen_result <- data_gen_p1(n, overlap, all_confounder)

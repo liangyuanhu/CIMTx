@@ -5,6 +5,29 @@
 #######################################################################
 
 
+#' Summarize posterior samples
+#'
+#' This function summarize posterior samples of RD, RR and OR. Please use our main function causal_multi_treat.R.
+#' @param RD_est vector of estimation for RD
+#' @param RR_est vector of estimation for RR
+#' @param OR_est vector of estimation for OR
+#'
+#' @return list with 2 elements for ATT effect. It contains
+#' \item{ATT12:}{A dataframe containing the estimation,
+#' standard error, lower and upper 95\% CI for RD/RR/OR}
+#'\item{ATT13:}{A dataframe containing the estimation,
+#'standard error, lower and upper 95\% CI for RD/RR/OR}
+#' list with 3 elements for ATE effect. It contains
+#' \item{ATE12:}{A dataframe containing the estimation,
+#' standard error, lower and upper 95\% CI for RD/RR/OR}
+#' \item{ATE13:}{A dataframe containing the estimation,
+#' standard error, lower and upper 95\% CI for RD/RR/OR}
+#'\item{ATE23:}{A dataframe containing the estimation,
+#'standard error, lower and upper 95\% CI for RD/RR/OR}
+#' @export
+#' @examples
+#' library(CIMTx)
+#' postSumm(RD_est = 1:10, RR_est = 11:20, OR_est = 1:10)
 postSumm = function(RD_est, RR_est, OR_est) {
     # Risk difference (RD)
     RD_mean = mean(RD_est)

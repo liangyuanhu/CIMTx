@@ -5,10 +5,26 @@
 # Author: Liangyuan Hu                                                       #
 # March 24, 2019                                                             #
 #============================================================================#
-
-
-
-data_gen_p1 = function(n = 11600, ratio = 3,all_confounder=F ) {
+#' Data generation function for scenario 1
+#'
+#' This function generates data to test different causal inference methods for scenario 1.  Please use our main function data_gen.R
+#'
+#' @param n total number of units for simulation
+#' @param ratio ratio of units in the treatment groups
+#' @param all_confounder TRUE or FALSE. overlap is lacking for a variable that is not predictive of the outcome (all_confounder equals to TRUE) or situations when it is lacking for a true confounder (all_confounder equals to FALSE)
+#'
+#' @return list with the 5 elements. Nested within each list, it contains
+#' \item{n:}{Number of units for simulation}
+#' \item{trt_ind:}{A data frame with number of rows equals to n and 11 columns}
+#' \item{Y:}{Observed binary outcome for 3 treatments}
+#' \item{Yobs:}{Observed binary outcome}
+#' \item{Est:}{True ATE/ATT for RD/RR/OR}
+#' @export
+#' @examples
+#' library(CIMTx)
+#' set.seed(3242019)
+#' data_gen_p1(n = 116, ratio = 3,all_confounder=FALSE)
+data_gen_p1 = function(n = 11600, ratio = 3,all_confounder=FALSE ) {
   p = 10
   #treatment assignment model
   if (ratio ==1) { alpha1=0.32; alpha2=0.28}

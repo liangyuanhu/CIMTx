@@ -1,9 +1,28 @@
 #==============================#
 # Author: Liangyuan Hu        #
 #=============================#
-data_gen_p2 = function(n = 11600, p =10, overlap = "weak", all_confounder = T ) {
+#' Data generation function for scenario 2
+#' This function generates data to test different causal inference methods for scenario 2.  Please use our main function data_gen.R
+#'
+#' @param n total number of units for simulation
+#' @param p number of predictors
+#' @param overlap levels of covariate overlap: Please select: weak, strong, moderate
+#' @param all_confounder TRUE or FALSE. overlap is lacking for a variable that is not predictive of the outcome (all_confounder equals to TRUE) or situations when it is lacking for a true confounder (all_confounder equals to FALSE)
+#'
+#' @return list with the 5 elements. Nested within each list, it contains
+#' \item{n:}{Number of units for simulation}
+#' \item{trt_ind:}{A data frame with number of rows equals to n and 11 columns}
+#' \item{Y:}{Observed binary outcome for 3 treatments}
+#' \item{Yobs:}{Observed binary outcome}
+#' \item{Est:}{True ATE/ATT for RD/RR/OR}
+#' @export
+#' @examples
+#' library(CIMTx)
+#' set.seed(3242019)
+#' data_gen_p2(n = 116, p =10, overlap = "weak", all_confounder = TRUE)
+data_gen_p2 = function(n = 11600, p =10, overlap = "weak", all_confounder = TRUE ) {
   #generate treatment label W
-  W = sample(c(1,2,3), size=n, replace=T, prob=c(.034,.517,.449))
+  W = sample(c(1,2,3), size=n, replace=TRUE, prob=c(.034,.517,.449))
   #generate covariates distribution conditional on treatment
   #==================================#
   #===========weak overlap===========#
@@ -12,9 +31,9 @@ data_gen_p2 = function(n = 11600, p =10, overlap = "weak", all_confounder = T ) 
     Xcon<-matrix(NA, nrow=n, ncol=5); Xcat<-matrix(NA, nrow=n, ncol=5);
     for (i in 1:n){
       Xcon[i,] = matrix(stats::rnorm(5,0,1)*(W[i]==1) + stats::rnorm(5, 1, 1)*(W[i]==2) + stats::rnorm(5, 2, 1)*(W[i]==3),ncol=5);
-      Xcat[i,] = matrix(sample (c(1,2,3), size = 5,replace =T, prob = c(.3,.3,.4))*(W[i]==1)
-                        + sample (c(1,2,3), size = 5,replace =T, prob = c(.6,.2,.2))*(W[i]==2)
-                        + sample (c(1,2,3), size = 5,replace =T, prob = c(.8,.1,.1))*(W[i]==3),ncol=5)
+      Xcat[i,] = matrix(sample (c(1,2,3), size = 5,replace =TRUE, prob = c(.3,.3,.4))*(W[i]==1)
+                        + sample (c(1,2,3), size = 5,replace =TRUE, prob = c(.6,.2,.2))*(W[i]==2)
+                        + sample (c(1,2,3), size = 5,replace =TRUE, prob = c(.8,.1,.1))*(W[i]==3),ncol=5)
     }
     x1 = Xcon[,1]; x2 = Xcon[,2]; x3 = Xcon[,3]; x4 = Xcon[,4]; x5 = Xcon[,5];
     x6 = Xcat[,1]; x7 = Xcat[,2]; x8 = Xcat[,3]; x9 = Xcat[,4]; x10 = Xcat[,5]
@@ -51,7 +70,7 @@ data_gen_p2 = function(n = 11600, p =10, overlap = "weak", all_confounder = T ) 
     Xcon<-matrix(NA, nrow=n, ncol=5); Xcat<-matrix(NA, nrow=n, ncol=5);
     for (i in 1:n) {
       Xcon[i,] = matrix(stats::rnorm(5, mean = 0.05*W[i], sd = 1- 0.05*W[i]),ncol=5);
-      Xcat[i,] = matrix(sample (c(1,2,3), size = 5,replace =T, prob = c(.3-0.001*W[i],.3+.001*W[i],.4)),ncol=5)
+      Xcat[i,] = matrix(sample (c(1,2,3), size = 5,replace =TRUE, prob = c(.3-0.001*W[i],.3+.001*W[i],.4)),ncol=5)
     }
     x1 = Xcon[,1]; x2 = Xcon[,2]; x3 = Xcon[,3]; x4 = Xcon[,4]; x5 = Xcon[,5];
     x6 = Xcat[,1]; x7 = Xcat[,2]; x8 = Xcat[,3]; x9 = Xcat[,4]; x10 = Xcat[,5]
@@ -85,15 +104,15 @@ data_gen_p2 = function(n = 11600, p =10, overlap = "weak", all_confounder = T ) 
     Xcon<-matrix(NA, nrow=n, ncol=5);  Xcat<-matrix(NA, nrow=n, ncol=5)
     for (i in 1:n) {
       Xcon[i,] = matrix(stats::rnorm(5, mean = 0.05*W[i], sd = 1- 0.05*W[i]),ncol=5);
-      Xcat[i,] = matrix(sample (c(1,2,3), size = 5,replace =T, prob = c(.3,.3,.4))*(W[i]==1)
-                        + sample (c(1,2,3), size = 5,replace =T, prob = c(.6,.2,.2))*(W[i]==2)
-                        + sample (c(1,2,3), size = 5,replace =T, prob = c(.8,.1,.1))*(W[i]==3),ncol=5)
+      Xcat[i,] = matrix(sample (c(1,2,3), size = 5,replace =TRUE, prob = c(.3,.3,.4))*(W[i]==1)
+                        + sample (c(1,2,3), size = 5,replace =TRUE, prob = c(.6,.2,.2))*(W[i]==2)
+                        + sample (c(1,2,3), size = 5,replace =TRUE, prob = c(.8,.1,.1))*(W[i]==3),ncol=5)
     }
     x1 = Xcon[,1]; x2 = Xcon[,2]; x3 = Xcon[,3]; x4 = Xcon[,4]; x5  = Xcon[,5];
     x6 = Xcat[,1]; x7 = Xcat[,2]; x8 = Xcat[,3]; x9 = Xcat[,4]; x10 = Xcat[,5]
     trtdat<- data.frame(W, Xcon, Xcat)
 
-    if (all_confounder == T) {
+    if (all_confounder == TRUE) {
       tau1 = .1; tau2 = .3; tau3= 0.5
       Yp1 = expit(tau1+ .2*x1 + .3*x2 - .4*x3 + .2*x4 - .2*x5 + 0.2*x6 + 0.4*x7 - 0.6*x8 + 0.2*x9 -0.3*x10
                   -.6*x1^2 - 0.7*x2^2 - 0.6*x3^2 + .4*x1*x7 - 0.5*x2*x8 + .2*x6*x9 + .1*x4^3 -.2*x10^2)
